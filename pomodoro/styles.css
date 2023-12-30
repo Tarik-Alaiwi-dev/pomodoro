@@ -1,0 +1,58 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-family: Roboto;
+}
+
+header{
+    display: flex;
+    background-color: #BA4949;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    height: 70px;
+    border-bottom: 1px solid #662727;
+    margin-bottom: 20px;
+}
+
+.account{
+    display: flex;
+}
+
+main{
+    background-color: #BA4949;
+    width: 70%;
+}
+
+.main{
+    background-color: #C15C5C;
+}
+
+.text-top{
+    margin-right: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.timer{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 100px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.start-btn{
+    display: flex;
+    justify-content: center;
+}
