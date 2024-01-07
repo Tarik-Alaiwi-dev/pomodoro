@@ -35,3 +35,11 @@ function updateTimer() {
     document.getElementById('title').innerHTML = timeDisplay + ' - Time to focus!';
   }
 }
+
+function shortBreak(){
+    document.querySelector('.main-icon').href = "/images/check-blue.png";
+}
+
+function pomodoro(){
+    document.querySelector('.main-icon').href = "/images/check-red.png";
+}

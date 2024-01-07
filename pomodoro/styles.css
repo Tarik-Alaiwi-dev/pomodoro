@@ -32,6 +32,7 @@ main{
 
 .main{
     background-color: #C15C5C;
+    padding: 10px;
 }
 
 .text-top{
@@ -59,6 +60,9 @@ main{
 
 .start{
     display: block;
+    background-color: white;
+    color: #BA4949;
+    font-weight: bold;
 }
 
 .start-hide{
@@ -67,8 +71,36 @@ main{
 
 .pause{
     display: none;
+    background-color: white;
+    color: #BA4949;
+    font-weight: bold;
 }
 
 .pause-display{
     display: block;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    margin-left: 10px;
+}
+
+button{
+    padding: 10px 15px;
+    background-color: #C15C5C;
+    color: white;
+    border: none;
+    margin-right: 10px;
+    border-radius: 5px;
+    transition: opacity 0.1s;
+    cursor: pointer;
+}
+
+button:hover{
+    opacity: 80%;
+}
+
+.text-top button{
+    background-color: #a54343;
 }
