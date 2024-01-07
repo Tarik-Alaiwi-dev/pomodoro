@@ -57,5 +57,18 @@ main{
     justify-content: center;
 }
 
-#start{
+.start{
+    display: block;
+}
+
+.start-hide{
+    display: none;
+}
+
+.pause{
+    display: none;
+}
+
+.pause-display{
+    display: block;
 }
