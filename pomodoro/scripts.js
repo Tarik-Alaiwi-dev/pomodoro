@@ -2,6 +2,7 @@ let timer;
 let minutes = 25;
 let seconds = 0;
 let tabTitle = document.getElementById('title');
+let repetition = 0;
 
 function startTimer() {
   timer = setInterval(updateTimer, 1000);
@@ -19,6 +20,12 @@ function updateTimer() {
   if (minutes === 0 && seconds === 0) {
     stopTimer();
     alert("Czas minął!");
+    repetition++;
+    if(repetition<3){
+      shortBreak();
+    }else{
+      longBreak();
+    }
   } else {
     if (seconds === 0) {
       minutes--;
@@ -37,9 +44,13 @@ function updateTimer() {
 }
 
 function shortBreak(){
-    document.querySelector('.main-icon').href = "/images/check-blue.png";
+    document.querySelector('.main-icon').href = "images/check-green.png";
+}
+
+function longBreak(){
+  document.querySelector('.main-icon').href = "images/check-blue.png";
 }
 
 function pomodoro(){
-    document.querySelector('.main-icon').href = "/images/check-red.png";
+    document.querySelector('.main-icon').href = "images/check-red.png";
 }
