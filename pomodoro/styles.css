@@ -9,7 +9,18 @@ body{
     flex-direction: column;
     font-family: Roboto;
     color: white;
+}
+
+.pomo-body{
     background-color: #BA4949;
+}
+
+.short-body{
+    background-color: #38858A;
+}
+
+.long-body{
+    background-color: #397097;
 }
 
 header{
@@ -101,7 +112,7 @@ button:hover{
     opacity: 80%;
 }
 
-.text-top button{
+.set-pomo{
     background-color: #a54343;
 }
 

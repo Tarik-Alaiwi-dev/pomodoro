@@ -45,12 +45,33 @@ function updateTimer() {
 
 function shortBreak(){
     document.querySelector('.main-icon').href = "images/check-green.png";
+    document.querySelector('.pomo').classList.remove('set-pomo');
+    document.querySelector('.long').classList.remove('set-long');
+    document.querySelector('.short').classList.add('set-short');
+
+    document.getElementById('body').classList.remove('pomo-body');
+    document.getElementById('body').classList.remove('long-body');
+    document.getElementById('body').classList.add('short-body');
 }
 
 function longBreak(){
   document.querySelector('.main-icon').href = "images/check-blue.png";
+  document.querySelector('.pomo').classList.remove('set-pomo');
+  document.querySelector('.long').classList.add('set-long');
+  document.querySelector('.short').classList.remove('set-short');
+
+  document.getElementById('body').classList.remove('pomo-body');
+  document.getElementById('body').classList.add('long-body');
+  document.getElementById('body').classList.remove('short-body');
 }
 
 function pomodoro(){
     document.querySelector('.main-icon').href = "images/check-red.png";
+    document.querySelector('.pomo').classList.add('set-pomo');
+    document.querySelector('.long').classList.remove('set-long');
+    document.querySelector('.short').classList.remove('set-short');
+
+    document.getElementById('body').classList.add('pomo-body');
+    document.getElementById('body').classList.remove('long-body');
+    document.getElementById('body').classList.remove('short-body');
 }

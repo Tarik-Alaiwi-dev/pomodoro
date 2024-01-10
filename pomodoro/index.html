@@ -20,7 +20,7 @@
   <!-- Title -->
   <title id="title">Time to focus!</title>
 </head>
-<body>
+<body id="body" class="pomo-body">
   <header>
     <div class="logo">
         <a href="/pomodoro/index.html">
@@ -56,9 +56,9 @@
     <div class="content">
         <div class="main">
             <div class="text-top">
-                <button onclick="pomodoro();">Pomodoro</button>
-                <button onclick="shortBreak();">Short Break</button>
-                <button onclick="longBreak();">Long Break</button>
+                <button class="pomo set-pomo" onclick="pomodoro();">Pomodoro</button>
+                <button class="short" onclick="shortBreak();">Short Break</button>
+                <button class="long" onclick="longBreak();">Long Break</button>
             </div>
             <div class="timer">25:00</div>
             <div class="start-btn">
