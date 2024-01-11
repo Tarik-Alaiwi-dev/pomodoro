@@ -44,6 +44,8 @@ function updateTimer() {
 }
 
 function shortBreak(){
+    minutes = 5;
+    seconds = 1;
     document.querySelector('.main-icon').href = "images/check-green.png";
     document.querySelector('.pomo').classList.remove('set-pomo');
     document.querySelector('.long').classList.remove('set-long');
@@ -52,9 +54,12 @@ function shortBreak(){
     document.getElementById('body').classList.remove('pomo-body');
     document.getElementById('body').classList.remove('long-body');
     document.getElementById('body').classList.add('short-body');
+    updateTimer();
 }
 
 function longBreak(){
+  minutes = 15;
+  seconds = 1;
   document.querySelector('.main-icon').href = "images/check-blue.png";
   document.querySelector('.pomo').classList.remove('set-pomo');
   document.querySelector('.long').classList.add('set-long');
@@ -63,9 +68,12 @@ function longBreak(){
   document.getElementById('body').classList.remove('pomo-body');
   document.getElementById('body').classList.add('long-body');
   document.getElementById('body').classList.remove('short-body');
+  updateTimer();
 }
 
 function pomodoro(){
+    minutes = 25;
+    seconds = 1;
     document.querySelector('.main-icon').href = "images/check-red.png";
     document.querySelector('.pomo').classList.add('set-pomo');
     document.querySelector('.long').classList.remove('set-long');
@@ -74,4 +82,5 @@ function pomodoro(){
     document.getElementById('body').classList.add('pomo-body');
     document.getElementById('body').classList.remove('long-body');
     document.getElementById('body').classList.remove('short-body');
+    updateTimer();
 }
