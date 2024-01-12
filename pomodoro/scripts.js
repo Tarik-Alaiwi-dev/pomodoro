@@ -3,6 +3,16 @@ let minutes = 25;
 let seconds = 0;
 let tabTitle = document.getElementById('title');
 let repetition = 0;
+let taskList = [
+  {
+    numOfPomo: 1,
+    donePomo: 0,
+    name: "halo",
+    checked: false
+  }
+];
+
+console.log(taskList);
 
 function startTimer() {
   timer = setInterval(updateTimer, 1000);
@@ -54,7 +64,12 @@ function shortBreak(){
     document.getElementById('body').classList.remove('pomo-body');
     document.getElementById('body').classList.remove('long-body');
     document.getElementById('body').classList.add('short-body');
+
+    document.querySelector('.start').classList.add('start-short');
+    document.querySelector('.start').classList.remove('start-long');
+    document.querySelector('.start').classList.remove('start-pomo');
     updateTimer();
+    stopTimer();
 }
 
 function longBreak(){
@@ -68,7 +83,12 @@ function longBreak(){
   document.getElementById('body').classList.remove('pomo-body');
   document.getElementById('body').classList.add('long-body');
   document.getElementById('body').classList.remove('short-body');
+
+  document.querySelector('.start').classList.remove('start-short');
+  document.querySelector('.start').classList.add('start-long');
+  document.querySelector('.start').classList.remove('start-pomo');
   updateTimer();
+  stopTimer();
 }
 
 function pomodoro(){
@@ -82,5 +102,59 @@ function pomodoro(){
     document.getElementById('body').classList.add('pomo-body');
     document.getElementById('body').classList.remove('long-body');
     document.getElementById('body').classList.remove('short-body');
+
+    document.querySelector('.start').classList.remove('start-short');
+    document.querySelector('.start').classList.remove('start-long');
+    document.querySelector('.start').classList.add('start-pomo');
     updateTimer();
+    stopTimer();
+}
+
+function addTask(){
+  //display properly
+  document.querySelector('.add-task').classList.add('add-task-disable');
+  document.querySelector('.new-task').classList.add('new-task-enable');
+
+  //set default num of pomo
+  document.getElementById('num-of-pomo').value = 1;
+}
+
+function cancel(){
+  document.querySelector('.add-task').classList.remove('add-task-disable');
+  document.querySelector('.new-task').classList.remove('new-task-enable');
+}
+
+function save(){
+  //add task to taskList
+  let newTask = {
+    numOfPomo: Number(document.getElementById('num-of-pomo').value),
+    donePomo: 0,
+    name: document.getElementById('input-task').value,
+    checked: false
+  };
+  taskList.push(newTask);
+  console.log(taskList);
+  document.querySelector('.add-task').classList.remove('add-task-disable');
+  document.querySelector('.new-task').classList.remove('new-task-enable');
+  
+  updateTasks();
+}
+
+function updateTasks(){
+  let conteiner = document.querySelector('.task-list');
+  console.log(conteiner);
+
+  let newTask = `
+    <button class="task">
+      <div class="left">
+          <i class="fa-solid fa-circle-check"></i>
+          <span>${taskList[taskList.length-1].name}</span>
+      </div>
+      <div class="right">
+          <span>${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
+      </div>
+    </button>
+  `;
+
+  conteiner.innerHTML += newTask;
 }
