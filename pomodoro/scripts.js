@@ -14,6 +14,7 @@ let taskList = [
 let taskId = 0;
 let lastSelected;
 let state = 0;
+let audioBell = new Audio("sounds/bell.mp3");
 
 console.log(taskList);
 
@@ -39,8 +40,8 @@ function skip(){
 function updateTimer() {
   if (minutes === 0 && seconds === 0) {
     stopTimer();
-    alert("Czas minął!");
     repetition++;
+    audioBell.play();
     if(lastSelected != null && state === 0){
       taskList[lastSelected+1].donePomo++;
       console.log(taskList[lastSelected+1].donePomo);
@@ -50,6 +51,7 @@ function updateTimer() {
       shortBreak();
     }else{
       longBreak();
+      repetition=0;
     }
   } else {
     if (seconds === 0) {
@@ -84,6 +86,10 @@ function shortBreak(){
     document.querySelector('.start').classList.add('start-short');
     document.querySelector('.start').classList.remove('start-long');
     document.querySelector('.start').classList.remove('start-pomo');
+
+    document.querySelector('.pause').classList.add('pause-short');
+    document.querySelector('.pause').classList.remove('pause-long');
+    document.querySelector('.pause').classList.remove('pause-pomo');
     updateTimer();
     stopTimer();
 }
@@ -104,6 +110,10 @@ function longBreak(){
   document.querySelector('.start').classList.remove('start-short');
   document.querySelector('.start').classList.add('start-long');
   document.querySelector('.start').classList.remove('start-pomo');
+
+  document.querySelector('.pause').classList.add('pause-short');
+  document.querySelector('.pause').classList.remove('pause-long');
+  document.querySelector('.pause').classList.remove('pause-pomo');
   updateTimer();
   stopTimer();
 }
@@ -124,6 +134,10 @@ function pomodoro(){
     document.querySelector('.start').classList.remove('start-short');
     document.querySelector('.start').classList.remove('start-long');
     document.querySelector('.start').classList.add('start-pomo');
+
+    document.querySelector('.pause').classList.add('pause-short');
+    document.querySelector('.pause').classList.remove('pause-long');
+    document.querySelector('.pause').classList.remove('pause-pomo');
     updateTimer();
     stopTimer();
 }

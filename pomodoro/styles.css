@@ -100,6 +100,18 @@ main{
     font-weight: bold;
 }
 
+.pause-pomo{
+    color: #BA4949;
+}
+
+.pause-short{
+    color: #2e7276;
+}
+
+.pause-long{
+    color: #29506c;
+}
+
 .pause-display{
     display: block;
 }
