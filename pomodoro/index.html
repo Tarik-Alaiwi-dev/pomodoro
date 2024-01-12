@@ -69,7 +69,7 @@
         <div class="secondary">
             <div class="quanity">#1</div>
             <div class="motivation">
-                <span>Time to focus!</span>
+                <span class="task-title">Time to focus!</span>
             </div>
             <div class="tasks-menager">
                 <div class="text">
@@ -83,15 +83,6 @@
             </div>
             <div class="tasks">
                 <div class="task-list">
-                    <button class="task">
-                        <div class="left">
-                            <i onclick="crossTask();" class="fa-solid fa-circle-check"></i>
-                            <span>zupa</span>
-                        </div>
-                        <div class="right">
-                            <span>0/1</span>
-                        </div>
-                    </button>
                 </div>
                 <div class="add-task">
                     <button onclick="addTask();">
@@ -104,10 +95,10 @@
                     <span>Est Pomodoros</span>
                     <div class="count-pomos">
                         <input id="num-of-pomo" type="text">
-                        <button class="add">
+                        <button onclick="addPomo();" class="add">
                             <i class="fa-solid fa-sort-up"></i>
                         </button>
-                        <button class="remove">
+                        <button onclick="removePomo();" class="remove">
                             <i class="fa-solid fa-sort-down"></i>
                         </button>
                     </div>

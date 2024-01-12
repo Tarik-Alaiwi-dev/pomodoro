@@ -11,6 +11,8 @@ let taskList = [
     checked: false
   }
 ];
+let taskId = 0;
+let lastSelected;
 
 console.log(taskList);
 
@@ -126,6 +128,9 @@ function cancel(){
 
 function save(){
   //add task to taskList
+  if(document.getElementById('input-task').value === ''){
+    return;
+  }
   let newTask = {
     numOfPomo: Number(document.getElementById('num-of-pomo').value),
     donePomo: 0,
@@ -138,6 +143,7 @@ function save(){
   document.querySelector('.new-task').classList.remove('new-task-enable');
   
   updateTasks();
+  document.getElementById('input-task').value = '';
 }
 
 function updateTasks(){
@@ -145,20 +151,39 @@ function updateTasks(){
   console.log(conteiner);
 
   let newTask = `
-    <button class="task">
+    <button onclick="checkTask(${taskId})"; class="task task-${taskId}">
       <div class="left">
-          <i class="fa-solid fa-circle-check"></i>
-          <span>${taskList[taskList.length-1].name}</span>
+          <i onclick="crossTask(${taskId});" class="fa-solid fa-circle-check"></i>
+          <span id="task-name-${taskId}">${taskList[taskList.length-1].name}</span>
       </div>
       <div class="right">
           <span>${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
       </div>
     </button>
   `;
+  taskId++;
 
   conteiner.innerHTML += newTask;
 }
 
-function crossTask(){
-  //
+function checkTask(i){
+  document.querySelector(`.task-${i}`).classList.add('task-selected');
+  if(lastSelected != null){
+    document.querySelector(`.task-${lastSelected}`).classList.remove('task-selected');
+  }
+  lastSelected = i;
+  document.querySelector('.task-title').innerHTML = taskList[i+1].name;
+}
+
+function crossTask(i){
+  document.getElementById(`task-name-${i}`).classList.add('task-checked');
+  document.getElementById(`check-${i}`).classList.add('checker');
+}
+
+function addPomo(){
+  document.getElementById('num-of-pomo').value++;
+}
+
+function removePomo(){
+  document.getElementById('num-of-pomo').value--;
 }
