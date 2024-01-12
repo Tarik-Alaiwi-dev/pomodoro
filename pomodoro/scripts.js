@@ -13,6 +13,7 @@ let taskList = [
 ];
 let taskId = 0;
 let lastSelected;
+let state = 0;
 
 console.log(taskList);
 
@@ -28,11 +29,23 @@ function stopTimer() {
   document.querySelector('.pause').classList.remove('pause-display');
 }
 
+function skip(){
+  minutes = 0;
+  seconds = 1;
+  startTimer();
+  updateTimer();
+}
+
 function updateTimer() {
   if (minutes === 0 && seconds === 0) {
     stopTimer();
     alert("Czas minął!");
     repetition++;
+    if(lastSelected != null && state === 0){
+      taskList[lastSelected+1].donePomo++;
+      console.log(taskList[lastSelected+1].donePomo);
+      document.getElementById(`done-pomo-${lastSelected}`).innerHTML = `${taskList[lastSelected+1].donePomo}/${taskList[lastSelected+1].numOfPomo}`;
+    }
     if(repetition<3){
       shortBreak();
     }else{
@@ -56,6 +69,7 @@ function updateTimer() {
 }
 
 function shortBreak(){
+    state = 1;
     minutes = 5;
     seconds = 1;
     document.querySelector('.main-icon').href = "images/check-green.png";
@@ -75,6 +89,7 @@ function shortBreak(){
 }
 
 function longBreak(){
+  state = 2;
   minutes = 15;
   seconds = 1;
   document.querySelector('.main-icon').href = "images/check-blue.png";
@@ -94,6 +109,7 @@ function longBreak(){
 }
 
 function pomodoro(){
+    state = 0;
     minutes = 25;
     seconds = 1;
     document.querySelector('.main-icon').href = "images/check-red.png";
@@ -119,6 +135,9 @@ function addTask(){
 
   //set default num of pomo
   document.getElementById('num-of-pomo').value = 1;
+
+  //focus on input
+  document.getElementById('input-task').focus();
 }
 
 function cancel(){
@@ -151,13 +170,13 @@ function updateTasks(){
   console.log(conteiner);
 
   let newTask = `
-    <button onclick="checkTask(${taskId})"; class="task task-${taskId}">
+    <button onclick="checkTask(${taskId});" class="task task-${taskId}">
       <div class="left">
-          <i onclick="crossTask(${taskId});" class="fa-solid fa-circle-check"></i>
+          <img class="img img-${taskId}" onclick="crossTask(${taskId});" src="images/check-grey.png">
           <span id="task-name-${taskId}">${taskList[taskList.length-1].name}</span>
       </div>
       <div class="right">
-          <span>${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
+          <span id="done-pomo-${taskId}">${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
       </div>
     </button>
   `;
@@ -176,8 +195,16 @@ function checkTask(i){
 }
 
 function crossTask(i){
-  document.getElementById(`task-name-${i}`).classList.add('task-checked');
-  document.getElementById(`check-${i}`).classList.add('checker');
+  console.log(taskList[i+1].checked);
+  if(taskList[i+1].checked === true){
+    taskList[i+1].checked = false;
+    document.getElementById(`task-name-${i}`).classList.remove('task-checked');
+    document.querySelector(`.img-${i}`).src = "images/check-grey.png";
+  }else{
+    document.getElementById(`task-name-${i}`).classList.add('task-checked');
+    taskList[i+1].checked = true;
+    document.querySelector(`.img-${i}`).src = "images/check-red.png";
+  }
 }
 
 function addPomo(){

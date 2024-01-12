@@ -64,6 +64,9 @@
             <div class="start-btn">
                 <button class="start start-pomo" onclick="startTimer();">START</button>
                 <button class="pause" onclick="stopTimer();">PAUSE</button>
+                <div class="skip">
+                    <button onclick="skip();">skip</button>
+                </div>
             </div>
         </div>
         <div class="secondary">
@@ -92,7 +95,7 @@
                 </div>
                 <div class="new-task">
                     <input id="input-task" type="text" placeholder="What are you working on?">
-                    <span>Est Pomodoros</span>
+                    <span id="Est">Est Pomodoros</span>
                     <div class="count-pomos">
                         <input id="num-of-pomo" type="text">
                         <button onclick="addPomo();" class="add">
@@ -102,7 +105,7 @@
                             <i class="fa-solid fa-sort-down"></i>
                         </button>
                     </div>
-                    <div class="cancel">
+                    <div class="btns">
                         <button onclick="cancel();" class="cancel">Cancel</button>
                         <button onclick="save();" class="save">Save</button>
                     </div>
