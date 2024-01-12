@@ -158,3 +158,7 @@ function updateTasks(){
 
   conteiner.innerHTML += newTask;
 }
+
+function crossTask(){
+  //
+}
