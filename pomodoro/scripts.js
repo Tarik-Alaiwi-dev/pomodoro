@@ -11,12 +11,15 @@ let taskList = [
     checked: false
   }
 ];
+//let temp = localStorage.getItem('taskList');
+//taskList = JSON.parse(temp)
 let taskId = 0;
 let lastSelected;
 let state = 0;
 let audioBell = new Audio("sounds/bell.mp3");
 
 console.log(taskList);
+
 
 function startTimer() {
   timer = setInterval(updateTimer, 1000);
@@ -31,6 +34,7 @@ function stopTimer() {
 }
 
 function skip(){
+  stopTimer();
   minutes = 0;
   seconds = 1;
   startTimer();
@@ -47,12 +51,16 @@ function updateTimer() {
       console.log(taskList[lastSelected+1].donePomo);
       document.getElementById(`done-pomo-${lastSelected}`).innerHTML = `${taskList[lastSelected+1].donePomo}/${taskList[lastSelected+1].numOfPomo}`;
     }
-    if(repetition<3){
-      shortBreak();
-    }else{
-      longBreak();
-      repetition=0;
-    }
+      if(state===0){
+        if(repetition<=3){
+          shortBreak();
+        }else{
+          longBreak();
+          repetition=0;
+        }
+      }else{
+        pomodoro();
+      }
   } else {
     if (seconds === 0) {
       minutes--;
@@ -135,9 +143,9 @@ function pomodoro(){
     document.querySelector('.start').classList.remove('start-long');
     document.querySelector('.start').classList.add('start-pomo');
 
-    document.querySelector('.pause').classList.add('pause-short');
+    document.querySelector('.pause').classList.remove('pause-short');
     document.querySelector('.pause').classList.remove('pause-long');
-    document.querySelector('.pause').classList.remove('pause-pomo');
+    document.querySelector('.pause').classList.add('pause-pomo');
     updateTimer();
     stopTimer();
 }
@@ -177,6 +185,10 @@ function save(){
   
   updateTasks();
   document.getElementById('input-task').value = '';
+
+    //local storage
+    //let taskList_serialized = JSON.stringify(taskList);
+    //localStorage.setItem("taskList", taskList_serialized);
 }
 
 function updateTasks(){
@@ -200,6 +212,9 @@ function updateTasks(){
 }
 
 function checkTask(i){
+  if(lastSelected === i){
+    return;
+  }
   document.querySelector(`.task-${i}`).classList.add('task-selected');
   if(lastSelected != null){
     document.querySelector(`.task-${lastSelected}`).classList.remove('task-selected');

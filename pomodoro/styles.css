@@ -200,9 +200,12 @@ button:hover{
     color: black;
 }
 
+.remove{
+    padding-top: 5px;
+}
+
 .add{
-    display: flex;
-    align-items: center;
+    padding-bottom: 5px;
 }
 
 .count-pomos{
@@ -334,4 +337,44 @@ button:hover{
 .img{
     width: 25px;
     margin-right: 10px;
+}
+
+@media screen and (max-width: 1200px){
+    header{
+        width: 50%;
+    }
+
+    main{
+        width: 40%;
+    }
+}
+
+@media screen and (max-width: 900px){
+    header{
+        width: 60%;
+    }
+
+    main{
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 700px){
+    header{
+        width: 70%;
+    }
+
+    main{
+        width: 60%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    header{
+        width: 100%;
+    }
+
+    main{
+        width: 100%;
+    }
 }
