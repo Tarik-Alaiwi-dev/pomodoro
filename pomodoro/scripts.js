@@ -20,6 +20,29 @@ let audioBell = new Audio("sounds/bell.mp3");
 
 console.log(taskList);
 
+function displayAtReload(){
+  if(taskList!=null){
+    let conteiner = document.querySelector('.task-list');
+    for(let i=0; i<taskList.length; i++){
+      let newTask = `
+        <button onclick="checkTask(${taskId});" class="task task-${taskId}">
+          <div class="left">
+              <img class="img img-${taskId}" onclick="crossTask(${taskId});" src="images/check-grey.png">
+              <span id="task-name-${taskId}">${taskList[taskList.length-1].name}</span>
+          </div>
+          <div class="right">
+              <span id="done-pomo-${taskId}">${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
+          </div>
+        </button>
+      `;
+      taskId++;
+    
+      conteiner.innerHTML += newTask;
+    }
+  }
+}
+displayAtReload();
+
 
 function startTimer() {
   timer = setInterval(updateTimer, 1000);
