@@ -11,19 +11,18 @@ let taskList = [
     checked: false
   }
 ];
-//let temp = localStorage.getItem('taskList');
-//taskList = JSON.parse(temp)
 let taskId = 0;
 let lastSelected;
 let state = 0;
 let audioBell = new Audio("sounds/bell.mp3");
+let quanity = 1;
 
 console.log(taskList);
 
 function displayAtReload(){
-  if(taskList!=null){
+  if(taskList.length>1){
     let conteiner = document.querySelector('.task-list');
-    for(let i=0; i<taskList.length; i++){
+    for(let i=1; i<taskList.length; i++){
       let newTask = `
         <button onclick="checkTask(${taskId});" class="task task-${taskId}">
           <div class="left">
@@ -81,6 +80,8 @@ function updateTimer() {
           longBreak();
           repetition=0;
         }
+        quanity++;
+        document.querySelector('.quanity').innerHTML = `#${quanity}`;
       }else{
         pomodoro();
       }
@@ -265,4 +266,12 @@ function addPomo(){
 
 function removePomo(){
   document.getElementById('num-of-pomo').value--;
+}
+
+function clearAll(){
+  taskList = taskList.slice(0, 1);
+  console.log(taskList);
+  document.querySelector('.task-list').innerHTML = '';
+  taskId = 0;
+  lastSelected = null;
 }

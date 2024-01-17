@@ -339,6 +339,28 @@ button:hover{
     margin-right: 10px;
 }
 
+.settings-btn{
+    position: relative;
+}
+
+.quick-set{
+    position: absolute;
+    background-color: white;
+    color: black;
+    display: none;
+}
+
+.settings-btn button:focus + .quick-set{
+    display: block;
+}
+
+.quick-set button{
+    background-color: transparent;
+    color: black;
+    padding: 0;
+    margin: 0;
+}
+
 @media screen and (max-width: 1200px){
     header{
         width: 50%;
