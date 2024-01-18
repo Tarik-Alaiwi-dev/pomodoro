@@ -16,6 +16,8 @@ let lastSelected;
 let state = 0;
 let audioBell = new Audio("sounds/bell.mp3");
 let quanity = 1;
+let quickSetDisplayed = false;
+let toStorage = [taskList, taskId];
 
 console.log(taskList);
 
@@ -27,10 +29,10 @@ function displayAtReload(){
         <button onclick="checkTask(${taskId});" class="task task-${taskId}">
           <div class="left">
               <img class="img img-${taskId}" onclick="crossTask(${taskId});" src="images/check-grey.png">
-              <span id="task-name-${taskId}">${taskList[taskList.length-1].name}</span>
+              <span id="task-name-${taskId}">${taskList[i].name}</span>
           </div>
           <div class="right">
-              <span id="done-pomo-${taskId}">${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
+              <span id="done-pomo-${taskId}">${taskList[i].donePomo}/${taskList[i].numOfPomo}</span>
           </div>
         </button>
       `;
@@ -40,8 +42,54 @@ function displayAtReload(){
     }
   }
 }
+
+// let conteiner = document.querySelector('.task-list');
+// console.log(conteiner);
+
+// let newTask = `
+//   <button onclick="checkTask(${taskId});" class="task task-${taskId}">
+//     <div class="left">
+//         <img class="img img-${taskId}" onclick="crossTask(${taskId});" src="images/check-grey.png">
+//         <span id="task-name-${taskId}">${taskList[taskList.length-1].name}</span>
+//     </div>
+//     <div class="right">
+//         <span id="done-pomo-${taskId}">${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
+//     </div>
+//   </button>
+// `;
+// taskId++;
+
+// conteiner.innerHTML += newTask;
+
+try {
+  getFromStorage();
+} catch (TypeError) {
+  console.log("nothing in storage");
+}
 displayAtReload();
 
+function saveToStorage(){
+  toStorage[0] = taskList;
+  toStorage[1] = taskId;
+  toStorage[2] = lastSelected;
+  console.log(toStorage[0]);
+  localStorage.setItem('toStorage', JSON.stringify(toStorage));
+}
+
+function getFromStorage(){
+  let fromStorage = localStorage.getItem('toStorage');
+  console.log("TU");
+  console.log(fromStorage[0]);
+  let deserialize = JSON.parse(fromStorage);
+  console.log(deserialize[0]);
+  console.log("tutaj");
+  console.log(fromStorage[1]);
+  taskList = deserialize[0];
+  console.log(taskList);
+  taskId = deserialize[1]-1;
+  lastSelected = deserialize[2];
+  console.log(lastSelected);
+}
 
 function startTimer() {
   timer = setInterval(updateTimer, 1000);
@@ -209,6 +257,7 @@ function save(){
   
   updateTasks();
   document.getElementById('input-task').value = '';
+  saveToStorage();
 
     //local storage
     //let taskList_serialized = JSON.stringify(taskList);
@@ -245,6 +294,7 @@ function checkTask(i){
   }
   lastSelected = i;
   document.querySelector('.task-title').innerHTML = taskList[i+1].name;
+  saveToStorage();
 }
 
 function crossTask(i){
@@ -274,4 +324,16 @@ function clearAll(){
   document.querySelector('.task-list').innerHTML = '';
   taskId = 0;
   lastSelected = null;
+  quickSet();
+  localStorage.removeItem('toStorage');
+}
+
+function quickSet(){
+  if(quickSetDisplayed){
+    document.querySelector('.quick-set').classList.remove('quick-set-display');
+    quickSetDisplayed = false;
+  }else{
+    document.querySelector('.quick-set').classList.add('quick-set-display');
+    quickSetDisplayed = true;
+  }
 }

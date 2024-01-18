@@ -350,7 +350,7 @@ button:hover{
     display: none;
 }
 
-.settings-btn button:focus + .quick-set{
+.quick-set-display{
     display: block;
 }
 
