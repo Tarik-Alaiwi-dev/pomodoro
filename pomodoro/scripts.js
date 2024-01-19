@@ -17,7 +17,7 @@ let state = 0;
 let audioBell = new Audio("sounds/bell.mp3");
 let quanity = 1;
 let quickSetDisplayed = false;
-let toStorage = [taskList, taskId];
+let toStorage = [];
 
 console.log(taskList);
 
@@ -26,7 +26,7 @@ function displayAtReload(){
     let conteiner = document.querySelector('.task-list');
     for(let i=1; i<taskList.length; i++){
       let newTask = `
-        <button onclick="checkTask(${taskId});" class="task task-${taskId}">
+        <button onclick="checkTask(${taskId});" class="task task-${taskId} ${taskId===lastSelected ? 'task-selected' : ''}">
           <div class="left">
               <img class="img img-${taskId}" onclick="crossTask(${taskId});" src="images/check-grey.png">
               <span id="task-name-${taskId}">${taskList[i].name}</span>
@@ -43,24 +43,6 @@ function displayAtReload(){
   }
 }
 
-// let conteiner = document.querySelector('.task-list');
-// console.log(conteiner);
-
-// let newTask = `
-//   <button onclick="checkTask(${taskId});" class="task task-${taskId}">
-//     <div class="left">
-//         <img class="img img-${taskId}" onclick="crossTask(${taskId});" src="images/check-grey.png">
-//         <span id="task-name-${taskId}">${taskList[taskList.length-1].name}</span>
-//     </div>
-//     <div class="right">
-//         <span id="done-pomo-${taskId}">${taskList[taskList.length-1].donePomo}/${taskList[taskList.length-1].numOfPomo}</span>
-//     </div>
-//   </button>
-// `;
-// taskId++;
-
-// conteiner.innerHTML += newTask;
-
 try {
   getFromStorage();
 } catch (TypeError) {
@@ -69,25 +51,21 @@ try {
 displayAtReload();
 
 function saveToStorage(){
+  console.log(lastSelected);
   toStorage[0] = taskList;
-  toStorage[1] = taskId;
-  toStorage[2] = lastSelected;
+  toStorage[1] = lastSelected;
   console.log(toStorage[0]);
   localStorage.setItem('toStorage', JSON.stringify(toStorage));
 }
 
 function getFromStorage(){
   let fromStorage = localStorage.getItem('toStorage');
-  console.log("TU");
-  console.log(fromStorage[0]);
   let deserialize = JSON.parse(fromStorage);
   console.log(deserialize[0]);
   console.log("tutaj");
-  console.log(fromStorage[1]);
   taskList = deserialize[0];
   console.log(taskList);
-  taskId = deserialize[1]-1;
-  lastSelected = deserialize[2];
+  lastSelected = deserialize[1];
   console.log(lastSelected);
 }
 
@@ -148,6 +126,7 @@ function updateTimer() {
     document.querySelector('.timer').innerText = timeDisplay;
     document.getElementById('title').innerHTML = timeDisplay + ' - Time to focus!';
   }
+  saveToStorage();
 }
 
 function shortBreak(){
@@ -257,7 +236,6 @@ function save(){
   
   updateTasks();
   document.getElementById('input-task').value = '';
-  saveToStorage();
 
     //local storage
     //let taskList_serialized = JSON.stringify(taskList);
@@ -282,6 +260,7 @@ function updateTasks(){
   taskId++;
 
   conteiner.innerHTML += newTask;
+  saveToStorage();
 }
 
 function checkTask(i){
