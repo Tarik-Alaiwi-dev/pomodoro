@@ -22,6 +22,7 @@ let toStorage = [];
 console.log(taskList);
 
 function displayAtReload(){
+  estimations();
   if(taskList.length>1){
     let conteiner = document.querySelector('.task-list');
     for(let i=1; i<taskList.length; i++){
@@ -49,6 +50,26 @@ try {
   console.log("nothing in storage");
 }
 displayAtReload();
+
+
+function estimations(){
+  if(taskList.length>1){
+    document.querySelector('.esti-box').classList.add('esti-box-display');
+    let x = 0;
+    let y = 0;
+    for(let i=1; i<taskList.length; i++){
+      x += taskList[i].donePomo;
+      y += taskList[i].donePomo < taskList[i].numOfPomo ? taskList[i].numOfPomo-taskList[i].donePomo : 0;
+      y += taskList[i].donePomo;
+    }
+    document.getElementById('pomo-esti').innerHTML = `${x}/${y}`;
+    console.log(`${x}/${y}`);
+  }
+}
+
+function estimateTime(){
+  
+}
 
 function saveToStorage(){
   console.log(lastSelected);
@@ -108,6 +129,7 @@ function updateTimer() {
         }
         quanity++;
         document.querySelector('.quanity').innerHTML = `#${quanity}`;
+        estimations();
       }else{
         pomodoro();
       }
@@ -236,6 +258,7 @@ function save(){
   
   updateTasks();
   document.getElementById('input-task').value = '';
+  estimations();
 
     //local storage
     //let taskList_serialized = JSON.stringify(taskList);
