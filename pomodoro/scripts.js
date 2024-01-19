@@ -64,11 +64,35 @@ function estimations(){
     }
     document.getElementById('pomo-esti').innerHTML = `${x}/${y}`;
     console.log(`${x}/${y}`);
+    const { resH: hours, resM: mins, timeLeftEsti: timeLeft } = estimateTime(x, y);
+    document.getElementById('time-esti').innerHTML = `${hours}:${mins}`;
+    document.getElementById('time-left').innerHTML = ` (${timeLeft}h)`;
   }
 }
 
-function estimateTime(){
-  
+function estimateTime(x, y){
+  console.log("");
+  const userTime = new Date();
+  let hours = userTime.getHours();
+  let minutes = userTime.getMinutes();
+
+  const pomosLeft = y - x;
+  let timeLeft = 25*pomosLeft;
+  const breaks15 = Math.floor((pomosLeft-1 - repetition)/3)*15;
+  const breaks5 = (pomosLeft-1 - breaks15)*5;
+  console.log(breaks5);
+  const sumOfBreaks = breaks15+breaks5;
+  timeLeft += sumOfBreaks;
+  const timeLeftEsti = (timeLeft/60).toFixed(1);
+  let hoursToMins = hours*60;
+  const timeEstimation = hoursToMins+minutes+timeLeft;
+  console.log(timeEstimation/60);
+  const resH = Math.floor(timeEstimation/60)>23 ? Math.floor(timeEstimation/60)-24 : Math.floor(timeEstimation/60);
+
+  const resM = Math.round(timeEstimation%60);
+  console.log(resH);
+  console.log(resM);
+  return {resH, resM, timeLeftEsti};
 }
 
 function saveToStorage(){
