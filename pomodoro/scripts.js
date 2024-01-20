@@ -65,8 +65,9 @@ function estimations(){
     document.getElementById('pomo-esti').innerHTML = `${x}/${y}`;
     console.log(`${x}/${y}`);
     const { resH: hours, resM: mins, timeLeftEsti: timeLeft } = estimateTime(x, y);
-    document.getElementById('time-esti').innerHTML = `${hours}:${mins}`;
+    document.getElementById('time-esti').innerHTML = `${hours<10 ? '0'+hours : hours}:${mins<10 ? '0'+mins : mins}`;
     document.getElementById('time-left').innerHTML = ` (${timeLeft}h)`;
+    //`${hours}:${mins}`
   }
 }
 
@@ -78,11 +79,20 @@ function estimateTime(x, y){
 
   const pomosLeft = y - x;
   let timeLeft = 25*pomosLeft;
-  const breaks15 = Math.floor((pomosLeft-1 - repetition)/3)*15;
-  const breaks5 = (pomosLeft-1 - breaks15)*5;
-  console.log(breaks5);
-  const sumOfBreaks = breaks15+breaks5;
+  let breaks15;
+  let breaks5;
+  let sumOfBreaks;
+  if(pomosLeft-1 <= 0){
+    sumOfBreaks = 0;
+  }else{
+    breaks15 = Math.floor((pomosLeft-1 - repetition)/3)*15;
+    breaks5 = (pomosLeft-1 - breaks15)*5;
+    console.log(breaks5);
+    sumOfBreaks = breaks15+breaks5;
+  }
   timeLeft += sumOfBreaks;
+  console.log('here');
+  console.log(timeLeft);
   const timeLeftEsti = (timeLeft/60).toFixed(1);
   let hoursToMins = hours*60;
   const timeEstimation = hoursToMins+minutes+timeLeft;
@@ -92,6 +102,8 @@ function estimateTime(x, y){
   const resM = Math.round(timeEstimation%60);
   console.log(resH);
   console.log(resM);
+  console.log('here');
+  console.log(timeLeftEsti);
   return {resH, resM, timeLeftEsti};
 }
 
@@ -283,10 +295,6 @@ function save(){
   updateTasks();
   document.getElementById('input-task').value = '';
   estimations();
-
-    //local storage
-    //let taskList_serialized = JSON.stringify(taskList);
-    //localStorage.setItem("taskList", taskList_serialized);
 }
 
 function updateTasks(){
@@ -350,6 +358,7 @@ function clearAll(){
   document.querySelector('.task-list').innerHTML = '';
   taskId = 0;
   lastSelected = null;
+  document.querySelector('.esti-box').classList.remove('esti-box-display');
   quickSet();
   localStorage.removeItem('toStorage');
 }
