@@ -9,6 +9,7 @@ body{
     flex-direction: column;
     font-family: Roboto;
     color: white;
+    position: relative;
 }
 
 .pomo-body{
@@ -31,6 +32,15 @@ header{
     height: 70px;
     border-bottom: 1px solid rgba(0,0,0,0.2);
     margin-bottom: 20px;
+}
+
+#chartContainer{
+    margin-top: 20px;
+    width: 100%;
+}
+
+.chartContainer-disable{
+    display: none;
 }
 
 .account{

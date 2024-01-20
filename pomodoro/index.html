@@ -30,7 +30,7 @@
     </div>
     <div class="account">
         <div class="report">
-            <button>
+            <button onclick="graphDisplay();">
                 <i class="fa-solid fa-square-poll-vertical"></i>
                 <span>Report</span>
             </button>
@@ -121,13 +121,14 @@
             </div>
         </div>
     </div>
+    <div id="chartContainer" class="chartContainer-disable"></div>
   </main>
 
   <footer>
-    <p></p>
   </footer>
 
   <noscript>Your browser don't support JavaScript!</noscript>
   <script src="./scripts.js"></script>
+  <script src="https://cdn.canvasjs.com/canvasjs.min.js"> </script>
 </body>
 </html>

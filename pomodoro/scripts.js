@@ -18,8 +18,59 @@ let audioBell = new Audio("sounds/bell.mp3");
 let quanity = 1;
 let quickSetDisplayed = false;
 let toStorage = [];
+let hoursFocusedToday = 5.5; //magazine every pomo as 25min is storage at any task, start at 0 every new day
+let hoursFocused = [hoursFocusedToday, 2, 1, 5, 3];
+
+const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+Date.prototype.toString = function() {
+  const dayOfWeek = daysOfWeek[this.getDay()];
+  const dayOfMonth = this.getDate();
+  const monthName = monthsOfYear[this.getMonth()];
+
+  return `${dayOfWeek} ${dayOfMonth}-${monthName}`;
+};
+
+let today = new Date();
+let dates = [];
+for(let i=0; i<5; i++){
+  let nextDay = new Date(today);
+  nextDay.setDate(today.getDate()+i);
+
+  dates.push(nextDay.toString());
+}
+
+let dataPoints = [];
+
+for(let i=0; i<5; i++){
+  dataPoints.push({label: dates[i], y: hoursFocused[i]});
+}
+
+console.log(dataPoints);
 
 console.log(taskList);
+
+window.onload = function () {
+
+  const chart = new CanvasJS.Chart("chartContainer", {
+    theme: "light1", // "light2", "dark1", "dark2"
+    animationEnabled: true, // change to true		
+    title:{
+      text: "Productivity graph"
+    },
+    data: [
+    {
+      // Change type to "bar", "area", "spline", "pie",etc.
+      type: "column",
+      dataPoints: dataPoints
+    }
+    ]
+  });
+  chart.render();
+  
+  }
+
 
 function displayAtReload(){
   estimations();
@@ -371,4 +422,8 @@ function quickSet(){
     document.querySelector('.quick-set').classList.add('quick-set-display');
     quickSetDisplayed = true;
   }
+}
+
+function graphDisplay(){
+  document.getElementById('chartContainer').classList.remove('chartContainer-disable');
 }
