@@ -3,6 +3,7 @@ let minutes = 25;
 let seconds = 0;
 let tabTitle = document.getElementById('title');
 let repetition = 0;
+let totalDayTime = 0;
 let taskList = [
   {
     numOfPomo: 1,
@@ -18,9 +19,8 @@ let audioBell = new Audio("sounds/bell.mp3");
 let quanity = 1;
 let quickSetDisplayed = false;
 let toStorage = [];
-let hoursFocusedToday = 5.5; //magazine every pomo as 25min is storage at any task, start at 0 every new day
-let hoursFocused = [hoursFocusedToday, 2, 1, 5, 3];
-
+let hoursFocusedToday = 0; //magazine every pomo as 25min is storage at any task, start at 0 every new day
+let hoursFocused = [3, 2, 1, 5, hoursFocusedToday];
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -34,17 +34,25 @@ Date.prototype.toString = function() {
 
 let today = new Date();
 let dates = [];
-for(let i=0; i<5; i++){
+for(let i=4; i>=0; i--){
   let nextDay = new Date(today);
-  nextDay.setDate(today.getDate()+i);
+  nextDay.setDate(today.getDate()-i);
 
   dates.push(nextDay.toString());
 }
 
+
 let dataPoints = [];
+
 
 for(let i=0; i<5; i++){
   dataPoints.push({label: dates[i], y: hoursFocused[i]});
+}
+
+try {
+  dataPoints[dataPoints.length-1].y = JSON.parse(localStorage.getItem('today')); 
+} catch (error) {
+  console.log("nothing in storage");
 }
 
 console.log(dataPoints);
@@ -53,7 +61,7 @@ console.log(taskList);
 
 window.onload = function () {
 
-  const chart = new CanvasJS.Chart("chartContainer", {
+  let chart = new CanvasJS.Chart("chartContainer", {
     theme: "light1", // "light2", "dark1", "dark2"
     animationEnabled: true, // change to true		
     title:{
@@ -67,9 +75,17 @@ window.onload = function () {
     }
     ]
   });
-  chart.render();
+
+  function updateChart(){
+    chart.options.data[0].dataPoints = dataPoints;
+    chart.render();
+  };
+
+updateChart();
+
+setInterval(function() {updateChart()}, 500);
   
-  }
+}
 
 
 function displayAtReload(){
@@ -129,6 +145,7 @@ function estimateTime(x, y){
   let minutes = userTime.getMinutes();
 
   const pomosLeft = y - x;
+  console.log(pomosLeft);
   let timeLeft = 25*pomosLeft;
   let breaks15;
   let breaks5;
@@ -157,6 +174,7 @@ function estimateTime(x, y){
   console.log(timeLeftEsti);
   return {resH, resM, timeLeftEsti};
 }
+
 
 function saveToStorage(){
   console.log(lastSelected);
@@ -208,6 +226,9 @@ function updateTimer() {
       document.getElementById(`done-pomo-${lastSelected}`).innerHTML = `${taskList[lastSelected+1].donePomo}/${taskList[lastSelected+1].numOfPomo}`;
     }
       if(state===0){
+        dataPoints[dataPoints.length-1].y += Number((25/60).toFixed(1));
+        localStorage.setItem('today', JSON.stringify(dataPoints[dataPoints.length-1].y));
+
         if(repetition<=3){
           shortBreak();
         }else{

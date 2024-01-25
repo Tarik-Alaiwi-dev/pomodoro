@@ -34,9 +34,15 @@ header{
     margin-bottom: 20px;
 }
 
-#chartContainer{
-    margin-top: 20px;
+.graph-box{
+    display: flex;
+    justify-content: center;
     width: 100%;
+}
+
+#chartContainer{
+    margin-top: 50px;
+    width: 500px;
 }
 
 .chartContainer-disable{
