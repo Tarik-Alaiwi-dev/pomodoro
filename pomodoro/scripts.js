@@ -32,7 +32,18 @@ Date.prototype.toString = function() {
   return `${dayOfWeek} ${dayOfMonth}-${monthName}`;
 };
 
+//today from storage, if null then new Date()
+//then check if from storage equal current date
+//if not move the hours (remove last from storage)
+
 let today = new Date();
+let newDate = new Date(today);
+
+today.setDate(today.getDate()+2);
+console.log(today);
+// today.setDate(today.getDate()+1);
+// console.log(today);
+
 let dates = [];
 for(let i=4; i>=0; i--){
   let nextDay = new Date(today);
@@ -41,19 +52,50 @@ for(let i=4; i>=0; i--){
   dates.push(nextDay.toString());
 }
 
+function setHoursFocused(){
+  dataPoints.splice(0);
+  for(let i=0; i<5; i++){
+    dataPoints.push({label: dates[i], y: hoursFocused[i]});
+  }
+}
 
 let dataPoints = [];
 
-
-for(let i=0; i<5; i++){
-  dataPoints.push({label: dates[i], y: hoursFocused[i]});
-}
-
 try {
-  dataPoints[dataPoints.length-1].y = JSON.parse(localStorage.getItem('today')); 
+  let lastDate = JSON.parse(localStorage.getItem('todayDate'));
+  let tmp = Number(today.getDate());
+  console.log(lastDate);
+  console.log(tmp);
+  if(lastDate != tmp){
+    alert("nowy dzien");
+    if(tmp-lastDate > 5){
+      for(let i=0; i<5; i++){
+        hoursFocused[i] = 0;
+      }
+    }else{
+      let i=1;
+      for(i=1; i<=tmp-lastDate; i++){
+        hoursFocused[hoursFocused.length-i] = 0;
+      }
+      hoursFocused[hoursFocused.length-i] = JSON.parse(localStorage.getItem('today'));
+    }
+  }else{
+    hoursFocused[hoursFocused.length-1] = JSON.parse(localStorage.getItem('today')); 
+  }
 } catch (error) {
   console.log("nothing in storage");
 }
+
+let todayDay = Number(today.getDate());
+localStorage.setItem("todayDate", JSON.stringify(todayDay));
+
+// try {
+//   hoursFocused[hoursFocused.length-1] = JSON.parse(localStorage.getItem('today')); 
+// } catch (error) {
+//   console.log("nothing in storage");
+// }
+
+setHoursFocused();
 
 console.log(dataPoints);
 
@@ -226,8 +268,9 @@ function updateTimer() {
       document.getElementById(`done-pomo-${lastSelected}`).innerHTML = `${taskList[lastSelected+1].donePomo}/${taskList[lastSelected+1].numOfPomo}`;
     }
       if(state===0){
-        dataPoints[dataPoints.length-1].y += Number((25/60).toFixed(1));
-        localStorage.setItem('today', JSON.stringify(dataPoints[dataPoints.length-1].y));
+        hoursFocused[hoursFocused.length-1] += Number((25/60).toFixed(1));
+        localStorage.setItem('today', JSON.stringify(hoursFocused[hoursFocused.length-1]));
+        setHoursFocused();
 
         if(repetition<=3){
           shortBreak();
@@ -446,5 +489,10 @@ function quickSet(){
 }
 
 function graphDisplay(){
-  document.getElementById('chartContainer').classList.remove('chartContainer-disable');
+  console.log(document.querySelector('.chartContainer-disable') != null);
+  if(document.querySelector('.chartContainer-disable') !=null){
+    document.getElementById('chartContainer').classList.remove('chartContainer-disable');
+  }else{
+    document.getElementById('chartContainer').classList.add('chartContainer-disable');
+  }
 }
