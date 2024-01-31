@@ -9,7 +9,7 @@ I've been using pomofocus app for years now. After getting a grasp of web app pr
 
 ## Demo
 
-<pomo-clone.netlify.app>
+pomo-clone.netlify.app
 
 ## Usage
 
