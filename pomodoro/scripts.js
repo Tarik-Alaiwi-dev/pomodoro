@@ -32,17 +32,10 @@ Date.prototype.toString = function() {
   return `${dayOfWeek} ${dayOfMonth}-${monthName}`;
 };
 
-//today from storage, if null then new Date()
-//then check if from storage equal current date
-//if not move the hours (remove last from storage)
-
 let today = new Date();
-let newDate = new Date(today);
 
-today.setDate(today.getDate()+2);
+today.setDate(today.getDate());
 console.log(today);
-// today.setDate(today.getDate()+1);
-// console.log(today);
 
 let dates = [];
 for(let i=4; i>=0; i--){
@@ -62,32 +55,37 @@ function setHoursFocused(){
 let dataPoints = [];
 
 try {
-  let lastDate = JSON.parse(localStorage.getItem('todayDate'));
-  let tmp = Number(today.getDate());
+  const lastDate = new Date(JSON.parse(localStorage.getItem('lastDate')));
+  const daysDiff = Math.floor((today-lastDate)/(1000*60*60*24));
+  console.log(daysDiff);
+  console.log(today);
   console.log(lastDate);
-  console.log(tmp);
-  if(lastDate != tmp){
+
+  if(lastDate.getDate()+"-"+lastDate.getMonth() != today.getDate()+"-"+today.getMonth()){
     alert("nowy dzien");
-    if(tmp-lastDate > 5){
+    //
+    if(daysDiff > 5){
       for(let i=0; i<5; i++){
         hoursFocused[i] = 0;
       }
     }else{
       let i=1;
-      for(i=1; i<=tmp-lastDate; i++){
+      let 
+      for(i=1; i<=daysDiff; i++){
         hoursFocused[hoursFocused.length-i] = 0;
       }
       hoursFocused[hoursFocused.length-i] = JSON.parse(localStorage.getItem('today'));
     }
+    //
   }else{
     hoursFocused[hoursFocused.length-1] = JSON.parse(localStorage.getItem('today')); 
   }
+  localStorage.setItem('hoursFocused', hoursFocused);
 } catch (error) {
   console.log("nothing in storage");
 }
 
-let todayDay = Number(today.getDate());
-localStorage.setItem("todayDate", JSON.stringify(todayDay));
+localStorage.setItem('lastDate', JSON.stringify(today));
 
 // try {
 //   hoursFocused[hoursFocused.length-1] = JSON.parse(localStorage.getItem('today')); 
@@ -107,7 +105,7 @@ window.onload = function () {
     theme: "light1", // "light2", "dark1", "dark2"
     animationEnabled: true, // change to true		
     title:{
-      text: "Productivity graph"
+      text: "Recent activity"
     },
     data: [
     {
