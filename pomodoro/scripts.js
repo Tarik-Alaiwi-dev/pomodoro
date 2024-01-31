@@ -34,7 +34,7 @@ Date.prototype.toString = function() {
 
 let today = new Date();
 
-today.setDate(today.getDate());
+today.setDate(today.getDate()+1);
 console.log(today);
 
 let dates = [];
@@ -70,7 +70,6 @@ try {
       }
     }else{
       let i=1;
-      let 
       for(i=1; i<=daysDiff; i++){
         hoursFocused[hoursFocused.length-i] = 0;
       }
