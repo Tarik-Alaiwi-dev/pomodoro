@@ -20,7 +20,7 @@ let quanity = 1;
 let quickSetDisplayed = false;
 let toStorage = [];
 let hoursFocusedToday = 0; //magazine every pomo as 25min is storage at any task, start at 0 every new day
-let hoursFocused = [3, 2, 1, 5, hoursFocusedToday];
+let hoursFocused = [0, 0, 0, 0, hoursFocusedToday];
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -62,7 +62,6 @@ try {
   console.log(lastDate);
 
   if(lastDate.getDate()+"-"+lastDate.getMonth() != today.getDate()+"-"+today.getMonth()){
-    alert("nowy dzien");
     //
     if(daysDiff > 5){
       for(let i=0; i<5; i++){
@@ -85,12 +84,6 @@ try {
 }
 
 localStorage.setItem('lastDate', JSON.stringify(today));
-
-// try {
-//   hoursFocused[hoursFocused.length-1] = JSON.parse(localStorage.getItem('today')); 
-// } catch (error) {
-//   console.log("nothing in storage");
-// }
 
 setHoursFocused();
 
