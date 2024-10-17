@@ -5,11 +5,11 @@ This is a simple clone of popular web app https://pomofocus.io
 
 ## Description
 
-I've been using pomofocus app for years now. After getting a grasp of web app programming I decided to make something of my own to show my skills. I enjoyed using pomofocus and I figured that the complexity of this project would fit my present skills.
+I've been using pomofocus app for years now. After getting a grasp of web app programming I decided to make something of my own to show my skills. I enjoyed using pomofocus and I figured that the complexity of this project would fit my skills at that time.
 
 ## Demo
 
-pomo-clone.netlify.app
+[pomo-clone.netlify.app](pomo-clone.netlify.app)
 
 ## Usage
 
@@ -26,4 +26,4 @@ Key features include:
 
 ## Project status
 
-I am currently working on recent acivity chart. In the immediate future I am going to add backend to this project with node.js and postgreSQL.
+I use this app to work and learn all the time but the development of this project is over. I was thinking about developing it further but after a careful consideration I have decided to focus on more interesting projects and develop new skills on them.
