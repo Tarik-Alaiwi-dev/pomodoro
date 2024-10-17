@@ -1,7 +1,7 @@
 ﻿
 # Pomofocus Clone
 
-This is a simple clone of popular web app https://pomofocus.io 
+This is a simple clone of popular web app [pomofocus.io](https://pomofocus.io)
 
 ## Description
 
@@ -9,7 +9,7 @@ I've been using pomofocus app for years now. After getting a grasp of web app pr
 
 ## Demo
 
-[pomo-clone.netlify.app](pomo-clone.netlify.app)
+[pomo-clone.netlify.app](https://pomo-clone.netlify.app)
 
 ## Usage
 
